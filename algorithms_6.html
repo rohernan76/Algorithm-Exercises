@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Algorithm - Problem #6</title>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Righteous"/>
+	<style>
+		.beginning {
+			border: 2px solid red;
+		}
+
+		.dragon {
+			font-family: Arial;
+			font-size: 50px;
+		}
+
+		.container-fluid {
+			font-family: Righteous;
+			font-size: 50px;
+		}
+
+		button {
+			background-color: #4CAF50; 
+			border: 1px solid yellow;
+			color: goldenrod;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			height: 63px;
+		}
+
+		input {
+			width: 175px;
+			height: 63px;
+			font-size: 25px;
+		}
+
+		p {
+			font-style: italic;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="beginning">
+		<h1 class="dragon"> Welcome to DRAGON LAYER!</h1>
+		<p class="center">Here are your instructions for getting out alive! Remember these because otherwise you may end up in the mouth of the dragon!</p>
+		<div>
+			<ul>
+			  <li>There are only 3 directions you can go:</li>
+			  <li>Type in 'west' to go west</li>
+			  <li>Type 'east' to go east</li>
+			  <li>Type 'north to go north</li>
+			  <br>
+			  <li>Stay out of the room that has the dragon in it <strong>unless</strong> you have a shield</li>
+			</ul>
+		</div>
+	</div>
+
+<hr>
+	<div id="adventure">
+		<p>Do you think you want to embark on this adventure? If you are, then in the following field type <strong>begin or any direction you want to go</strong> to start exploring!
+		</p>
+	</div>
+
+	<div class="container-fluid">
+		<input type="text" id="choiceOfDirection"><button onclick="game()">click me</button>
+	</div>
+<script>
+
+var adventure = document.getElementById("adventure");
+var shield = false;
+var current = "begin";
+var win = false;
+
+
+ function game(choiceOfDirection) {
+
+ 	choiceOfDirection = document.getElementById("choiceOfDirection").value;
+
+	var north = "you chose the North room.";
+	var west = "you chose the West room.";
+	var goWestWithShield = "the West room with the shield.";
+
+	if (choiceOfDirection == "begin"){
+		adventure.innerHTML = "Your adventure has begun! Choose the right directions and you will make this a memorable journey. Currently your GPS is showing that you are in the East room. We are detecting a rather large heat source in one of the rooms close to yours. BE CAREFUL! There is one exit to your North and one exit to your West. Choose which direction you want to go. Happy travels!!";
+			} else if (choiceOfDirection == "west" && current == "begin"){
+		adventure.innerHTML =  west + " You're in " + goWestWithShield + " By automatically entering this room you picked up the shield. Now take this shield and go defeat that dragon!";
+			shield = true;
+			current = "shield";
+	} else if ( choiceOfDirection == "north" && current == "begin"){
+			current = "dragon";
+			if (shield) {
+				adventure.innerHTML = "You have defeated the dragon! Woohoo! Now you can move passed the dragon and exit the north room!";
+				win = true;
+			} else {
+				adventure.innerHTML = "Why don't you head back to safety by returning to the east room. And here's a hint: there's a shield somewhere around here. Go find that and turn the odds into your favor! Trust me on this one!";
+			}
+	} else if (current = "shield" && choiceOfDirection == "east"){
+			current = "begin";
+			adventure.innerHTML = "You made it back to the east room! Your options from here are to return to the North room or go West. Don't forget about the hint: find the shield, <strong>THEN</strong> defeat the dragon. Again, head back to the north room with your shield to defeat the dragon and estxit the game.";
+	} else if (win) {
+		adventure.innerHTML = "Wow, what a narrow escape! It looks like you escaped unscather by the dragon. Play again by typing <strong>BEGIN</strong>. You never know, maybe you will come across some other hidden rooms that you didn't stumble upon before.";
+		win = false;
+		shield = false;
+		current = "begin";
+
+	} else {
+		adventure.innerHTML = "Either you mistyped the direction or there is no room beyond the room that you are currently in. Please try again.";
+	}
+
+}
+</script>
+
+
+</body>
+</html>
